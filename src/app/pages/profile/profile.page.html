@@ -1,0 +1,50 @@
+<ion-header [translucent]="true">
+  <ion-toolbar color="danger">
+    <ion-buttons slot="start">
+      <ion-menu-button></ion-menu-button>
+    </ion-buttons>
+    <ion-title>माझी माहिती</ion-title>
+
+  </ion-toolbar>
+</ion-header>
+<ion-content>
+  <ion-grid style="border:1px solid black;margin:15px">
+    <ion-row>
+      <ion-col>
+        <form #registration="ngForm">
+          <div class="mb-3">
+            <label class="form-label text-danger">संपूर्ण नाव</label>
+            <input type="text" class="form-control form-control-lg" disabled value="userData.fullName">
+          </div>
+          <div class="mb-3">
+            <label class="form-label text-danger">मोबाईल क्रमांक</label>
+            <input type="text" class="form-control form-control-lg" disabled value="userData.mobile">
+          </div>
+          <div class="mb-3">
+            <label class="form-label text-danger">ई-मेल ऍड्रेस</label>
+            <input type="text" class="form-control form-control-lg" disabled value="userData.email">
+          </div>
+          <div class="mb-3">
+            <label class="form-label text-danger">तालुका</label>
+            <input type="text" class="form-control form-control-lg" disabled value="userData.talukaName">
+          </div>
+          <div class="mb-3">
+            <label class="form-label text-danger">केंद्र</label>
+            <input type="text" class="form-control form-control-lg" disabled value="userData.blockName">
+          </div>
+          <div class="mb-3">
+            <label class="form-label text-danger">शाळेचे नाव</label>
+            <input type="text" class="form-control form-control-lg" disabled value="userData.schoolName">
+          </div>
+          <div class="mb-3">
+            <label class="form-label text-danger">पासवर्ड</label><br>
+            <ion-button expand="block" color="primary">दाखवा</ion-button>
+            <hr>
+            <input type="text" required disabled class="form-control form-control-lg" value="userData.password">
+          </div>
+
+        </form>
+      </ion-col>
+    </ion-row>
+  </ion-grid>
+</ion-content>

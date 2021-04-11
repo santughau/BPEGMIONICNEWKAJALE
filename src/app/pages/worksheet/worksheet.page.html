@@ -1,0 +1,87 @@
+<ion-header>
+  <ion-toolbar color="danger">
+    <ion-buttons slot="start">
+      <ion-menu-button></ion-menu-button>
+    </ion-buttons>
+    <ion-title>गृहपाठ</ion-title>
+  </ion-toolbar>
+  <ion-toolbar color="danger">
+    <ion-grid>
+      <ion-row>
+        <ion-col size="4">
+          <ion-label class="text-center">वर्ग</ion-label>
+          <ion-item>
+            <ion-select placeholder="वर्ग निवडा" interface="popover" mode="ios" name="classes" required
+              (ionChange)="onChangeClass($event)">
+              <ion-select-option value="100">
+                खालील पैकी एक</ion-select-option>
+              <ion-select-option value="{{item.allclasses_id}}" *ngFor="let item of datas">
+                {{item.allclasses_className}}</ion-select-option>
+
+            </ion-select>
+          </ion-item>
+        </ion-col>
+        <ion-col size="4">
+          <ion-label>विषय</ion-label>
+          <ion-item>
+            <ion-select placeholder="विषय   निवडा   " interface="action-sheet" mode="ios" name="tal" required
+              (ionChange)="onChangeSub($event)">
+              <ion-select-option value="100">
+                खालील पैकी एक</ion-select-option>
+              <ion-select-option value="{{item.allSubject_id}}" *ngFor="let item of allSubject">
+                {{item.allSubject_subjectName}}</ion-select-option>
+            </ion-select>
+          </ion-item>
+        </ion-col>
+        <ion-col size="4">
+          <ion-label>पाठाचे नाव</ion-label>
+          <ion-item>
+            <ion-select placeholder=" पाठाचे नाव  निवडा   " interface="action-sheet" mode="ios" name="tal" required
+              (ionChange)="onChangeChapter($event)">
+              <ion-select-option value="{{item.allChapters_id}}" *ngFor="let item of allChapters">
+                {{item.allChapters_name}}</ion-select-option>
+
+            </ion-select>
+          </ion-item>
+        </ion-col>
+      </ion-row>
+    </ion-grid>
+
+  </ion-toolbar>
+</ion-header>
+
+
+<ion-content>
+  <div *ngIf="showData && !firstView ">
+    <ion-list class="ion-no-padding ">
+      <ion-item *ngFor="let item of homeworkList;let i = index" (click)="onChangeHomework(item.homework_link)">
+        <ion-label>
+          <h2 class="text-danger">गृहपाठ क्रमांक {{i+1}}</h2>
+          <h3>{{item.homework_title}}</h3>
+        </ion-label>
+      </ion-item>
+    </ion-list>
+  </div>
+  <div *ngIf="!showData" class="text-danger text-center">
+    <ion-card color="danger">
+      <ion-card-header>
+        <ion-card-title>महत्वाची सूचना</ion-card-title>
+      </ion-card-header>
+      <ion-card-content>
+        माहिती उपलब्ध नाही
+      </ion-card-content>
+    </ion-card>
+  </div>
+
+  <div *ngIf="firstView" class="text-danger text-center">
+    <ion-card color="dark">
+      <ion-card-header>
+        <ion-card-title>महत्वाची सूचना</ion-card-title>
+      </ion-card-header>
+      <ion-card-content>
+        कृपया वर्ग , विषय व पाठाचे नाव निवडा
+      </ion-card-content>
+    </ion-card>
+
+  </div>
+</ion-content>

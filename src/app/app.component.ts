@@ -6,13 +6,22 @@ import { Component } from '@angular/core';
 })
 export class AppComponent {
   public appPages = [
-    { title: 'Inbox', url: '/folder/Inbox', icon: 'mail' },
-    { title: 'Outbox', url: '/folder/Outbox', icon: 'paper-plane' },
-    { title: 'Favorites', url: '/folder/Favorites', icon: 'heart' },
-    { title: 'Archived', url: '/folder/Archived', icon: 'archive' },
-    { title: 'Trash', url: '/folder/Trash', icon: 'trash' },
-    { title: 'Spam', url: '/folder/Spam', icon: 'warning' },
+    { title: 'मुख्य  पान ', url: '/home', icon: 'home' },
+    { title: 'बहुपर्यायी प्रश्न पत्रिका ', url: '/quiz', icon: 'apps' },
+    { title: 'व्हिडिओ ', url: '/youtube', icon: 'videocam' },
+    { title: 'गृहपाठ  ', url: '/worksheet', icon: 'create' },
+    {
+      title: 'प्रश्न  पत्रिका संग्रह   ',
+      url: '/question-papers',
+      icon: 'list',
+    },
+    { title: 'डाउनलोड  / लिंक ', url: '/download', icon: 'download' },
+    { title: 'सूचना  ', url: '/messages', icon: 'document-text' },
+    { title: 'शालेय पाठ्यपुस्तके  ', url: '/text-book', icon: 'book' },
+    { title: 'माझी प्रगती ', url: '/score-board', icon: 'analytics' },
+    { title: 'माझी  माहिती  ', url: '/profile', icon: 'person' },
+    { title: 'अँप  बद्दल  ', url: '/info-page', icon: 'apps' },
   ];
   public labels = ['Family', 'Friends', 'Notes', 'Work', 'Travel', 'Reminders'];
-  constructor() {}
+  constructor() { }
 }

@@ -1,0 +1,64 @@
+<ion-header class="ion-no-border">
+  <ion-toolbar color="danger">
+    <ion-buttons slot="start">
+      <ion-back-button defaultHref="quiz"></ion-back-button>
+    </ion-buttons>
+    <ion-title>{{questions[question_count]?.exam_name}}</ion-title>
+  </ion-toolbar>
+</ion-header>
+<ion-content>
+  <div class="row ">
+    <div class="col-md-12 bk">
+      <div class="quiz-box custom-box" *ngIf="show">
+        <div class="question-number">प्रश्न क्रमांक : {{question_count+1}} / {{questions.length}} <span
+            style="float: right;">{{formatted_min}}:{{formatted_sec}}</span></div>
+        <div style="text-align: justify;" class="question-text text-danger" [innerHtml]="questions[question_count]?.question"></div>
+        <div class="option-container">
+
+          <div style="text-align: justify;" id="0" class="option " *ngFor="let item of questions[question_count]?.options; let i = index"
+            [style.animation-delay.s]="i" (click)="toggleClass(i)" [innerHtml]="item"></div>
+        </div>
+        <div class="next-question-btn">
+          <button [disabled]="btnDissabled" class="btn" type="button" (click)="next()">{{buttonTitle}}</button>
+        </div>
+        <div class="answers-indicator">
+          <div *ngFor="let item of questions; let i = index"></div>
+        </div>
+      </div>
+      <div class="result-box custom-box" *ngIf="!show">
+        <h1>निकाल</h1>
+        <form #resultForm="ngForm">
+          <table>
+            <tr>
+              <td class="bg-dark text-white">एकूण प्रश्न</td>
+              <td class="total-questions">{{questions.length}}</td>
+            </tr>
+
+            <tr>
+              <td class="bg-dark text-white">बरोबर आलेली उत्तरे</td>
+              <td class="total-correct">{{correctAnswer}}</td>
+            </tr>
+            <tr>
+              <td class="bg-dark text-white">चूक असलेली उत्तरे</td>
+              <td class="total-wrong">{{questions.length - correctAnswer}}</td>
+            </tr>
+            <tr>
+              <td class="bg-dark text-white">शेकडा निकाल</td>
+              <td class="percentage">{{100 * correctAnswer /questions.length | number : '1.2-2'}}%</td>
+            </tr>
+            <tr>
+              <td class="bg-dark text-white">लागलेला वेळ </td>
+              <td class="percentage">{{formatted_min}} : {{formatted_sec}}</td>
+            </tr>
+
+
+
+          </table>
+          <button type="button" [disabled]="resultForm.invalid" class="btn" (click)="onSave()">सबमिट करा</button>
+        </form>
+      </div>
+    </div>
+
+  </div>
+
+</ion-content>
