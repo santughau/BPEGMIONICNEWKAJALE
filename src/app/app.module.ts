@@ -11,6 +11,7 @@ import { FormsModule } from '@angular/forms';
 import { InAppBrowser } from "@ionic-native/in-app-browser/ngx";
 
 
+
 @NgModule({
   declarations: [AppComponent],
   entryComponents: [],

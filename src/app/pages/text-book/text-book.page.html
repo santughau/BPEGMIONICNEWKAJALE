@@ -20,18 +20,18 @@
 
             </ion-select>
           </ion-item>
-        </ion-col> 
+        </ion-col>
       </ion-row>
     </ion-grid>
 
   </ion-toolbar>
 </ion-header>
 <ion-content>
-<ion-grid>
-  <ion-row>
-    <ion-col size="6" *ngFor="let item of allSubject" (click)="goToLink(item.allSubject_pdfLink)" >
-      <img src="{{item.allSubject_image}}" />
-    </ion-col>
-  </ion-row>
-</ion-grid>
+  <ion-grid>
+    <ion-row>
+      <ion-col size="6" *ngFor="let item of allSubject" (click)="goToLink(item.allSubject_pdfLink)">
+        <ion-img [src]="item.allSubject_image"></ion-img>
+      </ion-col>
+    </ion-row>
+  </ion-grid>
 </ion-content>

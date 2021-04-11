@@ -7,10 +7,10 @@ import { IonicModule } from '@ionic/angular';
 import { HomePageRoutingModule } from './home-routing.module';
 
 import { HomePage } from './home.page';
-
+import { CKEditorModule } from 'ng2-ckeditor';
 @NgModule({
   imports: [
-    CommonModule,
+    CommonModule, CKEditorModule,
     FormsModule,
     IonicModule,
     HomePageRoutingModule

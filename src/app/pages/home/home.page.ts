@@ -7,11 +7,11 @@ import { MyServiceService } from 'src/app/serives/my-service.service';
   styleUrls: ['./home.page.scss'],
 })
 export class HomePage implements OnInit {
-  
+  ckeditorContent;
   constructor(private service: MyServiceService) { }
 
   ngOnInit(): void {
-   
+    
   }
 
  
