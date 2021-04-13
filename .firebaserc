@@ -1,0 +1,11 @@
+{
+  "targets": {
+    "kajale-74332": {
+      "hosting": {
+        "app": [
+          "kajale-74332"
+        ]
+      }
+    }
+  }
+}

@@ -14,33 +14,24 @@
         <form #registration="ngForm">
           <div class="mb-3">
             <label class="form-label text-danger">संपूर्ण नाव</label>
-            <input type="text" class="form-control form-control-lg" disabled value="userData.fullName">
+            <input type="text" class="form-control form-control-lg" disabled [value]="registerData.profile_fullname">
           </div>
           <div class="mb-3">
             <label class="form-label text-danger">मोबाईल क्रमांक</label>
-            <input type="text" class="form-control form-control-lg" disabled value="userData.mobile">
+            <input type="text" class="form-control form-control-lg" disabled [value]="registerData.profile_mobile">
           </div>
           <div class="mb-3">
             <label class="form-label text-danger">ई-मेल ऍड्रेस</label>
-            <input type="text" class="form-control form-control-lg" disabled value="userData.email">
+            <input type="text" class="form-control form-control-lg" disabled [value]="registerData.profile_email">
           </div>
-          <div class="mb-3">
-            <label class="form-label text-danger">तालुका</label>
-            <input type="text" class="form-control form-control-lg" disabled value="userData.talukaName">
-          </div>
-          <div class="mb-3">
-            <label class="form-label text-danger">केंद्र</label>
-            <input type="text" class="form-control form-control-lg" disabled value="userData.blockName">
-          </div>
-          <div class="mb-3">
-            <label class="form-label text-danger">शाळेचे नाव</label>
-            <input type="text" class="form-control form-control-lg" disabled value="userData.schoolName">
-          </div>
+         
+
+
           <div class="mb-3">
             <label class="form-label text-danger">पासवर्ड</label><br>
-            <ion-button expand="block" color="primary">दाखवा</ion-button>
+            <ion-button expand="block" color="primary" (click)="showPassword()" >दाखवा</ion-button>
             <hr>
-            <input type="text" required disabled class="form-control form-control-lg" value="userData.password">
+            <input *ngIf="show"  type="text" required disabled class="form-control form-control-lg" [value]="registerData.profile_password">
           </div>
 
         </form>

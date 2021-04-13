@@ -1,0 +1,36 @@
+
+
+.bk {
+ padding-left: 10px;
+ padding-right: 10px;
+  font-size: 16px;
+  background-color: #EB445A !important;
+}
+
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+  outline: none;
+}
+
+.custom-box {
+  max-width: 100%;
+  background-color: #ffffff;
+  margin: 20px auto;
+  padding: 10px;
+  border-radius: 10px;
+  animation: fadeInRight 1s ease;
+  min-height: 95vh;
+}
+
+@keyframes fadeInRight {
+  0% {
+    transform: translateX(40px);
+    opacity: 0;
+  }
+  100% {
+    transform: translateX(0px);
+    opacity: 1;
+  }
+}

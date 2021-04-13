@@ -9,46 +9,13 @@
 
 <ion-content>
   <ion-list>
-    <ion-item>
-      <ion-label>
-        <h2> <b class="text-danger">पाठाचे पूर्ण नाव</b></h2>
-        <h2>प्रश्न पत्रिका क्रमांक १ <span style="float:right"><b class="text-danger">Date :</b> 23/08/1980</span></h2>
-        <h3><b class="text-danger">वर्ग:</b> आठवा <b class="text-danger">विषय : </b>मराठी <span style="float:right"><b
-              class="text-danger">Mark :</b> 10</span></h3>
+    <ion-item *ngFor="let item of collection"> 
+      <ion-label  >
+        <h2> <b class="text-primary">{{item.exam_name}}</b></h2>
+        <h2><b class="text-danger">दिनांक :</b> {{item.leaderBoard_date | date}} &nbsp;&nbsp;<b class="text-danger">गुण:</b> {{item.leaderBoard_marks}}% <span style="float:right"><b class="text-danger">वेळ :</b> {{item.leaderboard_time}}</span></h2>     
       </ion-label>
     </ion-item>
-    <ion-item>
-      <ion-label>
-        <h2> <b class="text-danger">पाठाचे पूर्ण नाव</b></h2>
-        <h2>प्रश्न पत्रिका क्रमांक १ <span style="float:right"><b class="text-danger">Date :</b> 23/08/1980</span></h2>
-        <h3><b class="text-danger">वर्ग:</b> आठवा <b class="text-danger">विषय : </b>मराठी <span style="float:right"><b
-              class="text-danger">Mark :</b> 10</span></h3>
-      </ion-label>
-    </ion-item>
-    <ion-item>
-      <ion-label>
-        <h2> <b class="text-danger">पाठाचे पूर्ण नाव</b></h2>
-        <h2>प्रश्न पत्रिका क्रमांक १ <span style="float:right"><b class="text-danger">Date :</b> 23/08/1980</span></h2>
-        <h3><b class="text-danger">वर्ग:</b> आठवा <b class="text-danger">विषय : </b>मराठी <span style="float:right"><b
-              class="text-danger">Mark :</b> 10</span></h3>
-      </ion-label>
-    </ion-item>
-    <ion-item>
-      <ion-label>
-        <h2> <b class="text-danger">पाठाचे पूर्ण नाव</b></h2>
-        <h2>प्रश्न पत्रिका क्रमांक १ <span style="float:right"><b class="text-danger">Date :</b> 23/08/1980</span></h2>
-        <h3><b class="text-danger">वर्ग:</b> आठवा <b class="text-danger">विषय : </b>मराठी <span style="float:right"><b
-              class="text-danger">Mark :</b> 10</span></h3>
-      </ion-label>
-    </ion-item>
-    <ion-item>
-      <ion-label>
-        <h2> <b class="text-danger">पाठाचे पूर्ण नाव</b></h2>
-        <h2>प्रश्न पत्रिका क्रमांक १ <span style="float:right"><b class="text-danger">Date :</b> 23/08/1980</span></h2>
-        <h3><b class="text-danger">वर्ग:</b> आठवा <b class="text-danger">विषय : </b>मराठी <span style="float:right"><b
-              class="text-danger">Mark :</b> 10</span></h3>
-      </ion-label>
-    </ion-item>
+   
   </ion-list>
 
 </ion-content>

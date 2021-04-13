@@ -1,38 +1,39 @@
-
-
 <ion-content>
-  <img class="brd" src="https://assets.telegraphindia.com/abped/2021/Jan/1611216141_tripura-girls.jpg" />
-  <ion-toolbar color="danger">
-    <ion-title class="text-center">Blog For Primary Education </ion-title>
-  </ion-toolbar>
-<ion-grid>
-  <ion-row>
-    <ion-col>
-      <div class="card" > 
-         
-        <div class="card-body">
-          <ion-item>
-            <ion-label position="floating">संपूर्ण नाव लिहा</ion-label>
-            <ion-input></ion-input>
-          </ion-item>
-          <ion-item>
-            <ion-label position="floating">Floating Label</ion-label>
-            <ion-input></ion-input>
-          </ion-item>
-          <ion-item>
-            <ion-label position="floating">Floating Label</ion-label>
-            <ion-input></ion-input>
-          </ion-item>
-          <ion-item>
-            <ion-label position="floating">Floating Label</ion-label>
-            <ion-input></ion-input>
-          </ion-item>
+  <div class="row ">
+    <div class="col-md-12 bk">
+      <div class="quiz-box custom-box">
+        <img class="brd" src="https://assets.telegraphindia.com/abped/2021/Jan/1611216141_tripura-girls.jpg" />
+
+        <div>
+          <img class="imgwidth" src="../../../assets/logo.jpg" />
         </div>
+        <ion-item>
+          <ion-label class="text-danger" position="floating">ई-मेल ऍड्रेस</ion-label>
+          <ion-input type="email" placeholder="ई-मेल" name="email" #email="ngModel" [(ngModel)]="registerData.email" required
+            email></ion-input>
+        </ion-item>
+        <div *ngIf="email.invalid && email.touched ">
+          <ion-text color="danger text-center">
+            <h4 style="padding-left: 20px; margin-top: 10px;">कृपया ई-मेल लिहावा</h4>
+          </ion-text>
+        </div>
+        <ion-item>
+          <ion-label class="text-danger" position="floating">पासवर्ड</ion-label>
+          <ion-input type="text" placeholder="पासवर्ड लिहा " name="password" #password="ngModel"
+            [(ngModel)]="registerData.password" required></ion-input>
+        </ion-item>
+        <div *ngIf="password.invalid && password.touched ">
+          <ion-text color="danger text-center">
+            <h4 style="padding-left: 20px; margin-top: 10px;">कृपया पासवर्ड लिहावा</h4>
+          </ion-text>
+        </div>
+      <div class="mt-5">
+          <ion-button color="danger" expand="block">लॉगिन करा</ion-button>
       </div>
-
-    </ion-col>
-  </ion-row>
-</ion-grid>
-  
-
+      <div class="mt-2">
+        <p class="text-center text-muted">नवीन खाते तयार करा <a routerLinkActive="active" routerLink="/register">Sign Up</a></p>
+      </div>
+      </div>
+    </div>
+  </div>
 </ion-content>

@@ -3,6 +3,7 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { NgForm } from '@angular/forms';
 import { MyServiceService } from 'src/app/serives/my-service.service';
 import { LoadingController } from '@ionic/angular';
+import { AngularFireAuth } from "@angular/fire/auth";
 @Component({
   selector: 'app-question-page',
   templateUrl: './question-page.page.html',
@@ -34,8 +35,19 @@ export class QuestionPagePage implements OnInit {
     dist: '',
     tal: ''
   };
+  uid = "";
+  registerData = {
+    profile_fullname: "",
+    profile_mobile: "",
+    profile_email: "",
+    profile_distId: "",
+    profile_taluka: "",
+    profile_password: "",
+    profile_uid: "",
+    profile_id: ""
+  };
   saveData = {}
-  constructor(public loadingController: LoadingController, private router: Router, public service: MyServiceService, private _route: ActivatedRoute) { }
+  constructor(public auth: AngularFireAuth, public loadingController: LoadingController, private router: Router, public service: MyServiceService, private _route: ActivatedRoute) { }
 
   ngOnInit() {
     this.userAnswer = "";
@@ -59,8 +71,16 @@ export class QuestionPagePage implements OnInit {
     this.timer();
     this.service.getDistrictList().subscribe((data) => {
       this.district = data.document.records;
-
     })
+
+    this.auth.user.subscribe((user) => {
+      this.uid = user.uid;
+      this.service.getProfile(this.uid).subscribe((res) => {
+        this.registerData = res.document;
+        // console.log(this.registerData);
+
+      });
+    });
   }
 
   async presentLoading() {
@@ -151,10 +171,12 @@ export class QuestionPagePage implements OnInit {
     this.btnDissabled = true;
     if (this.question_count == this.questions.length - 1) {
       this.show = false;
+      this.onSave();
     }
     if (this.question_count == this.questions.length - 2) {
       this.buttonTitle = "Finish";
       clearInterval(this.stopTimer);
+
     }
     this.question_count++;
   }
@@ -172,10 +194,8 @@ export class QuestionPagePage implements OnInit {
   }
   onSave() {
     this.saveData = {
-      leaderBoard_studentName: this.result.fullName,
-      leaderboard_mobile: this.result.mobile,
-      leaderboard_district: +this.result.dist,
-      leaderboard_taluka: +this.result.tal,
+      leaderBoard_profileId: this.registerData.profile_id,
+      leaderboard_mobile: this.registerData.profile_mobile,
       leaderBoard_exam_id: this.examId,
       leaderboard_time: this.formatted_min + ':' + this.formatted_sec,
       leaderBoard_marks: (100 * this.correctAnswer / this.questions.length).toFixed(2)

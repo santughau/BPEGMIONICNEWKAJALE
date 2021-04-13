@@ -1,4 +1,6 @@
 import { Component } from '@angular/core';
+import { MyServiceService } from 'src/app/serives/my-service.service';
+import { AngularFireAuth } from "@angular/fire/auth";
 @Component({
   selector: 'app-root',
   templateUrl: 'app.component.html',
@@ -23,5 +25,25 @@ export class AppComponent {
     { title: 'अँप  बद्दल  ', url: '/info-page', icon: 'apps' },
   ];
   public labels = ['Family', 'Friends', 'Notes', 'Work', 'Travel', 'Reminders'];
-  constructor() { }
+  uid = "";
+  registerData = {
+    profile_fullname: "",
+    profile_mobile: "",
+    profile_email: "",
+    profile_distId: "",
+    profile_taluka: "",
+    profile_password: "",
+    profile_uid: "",
+    profile_id: ""
+  };
+  constructor(private service: MyServiceService, public auth: AngularFireAuth) { 
+    this.auth.user.subscribe((user) => {
+      this.uid = user.uid;
+      this.service.getProfile(this.uid).subscribe((res) => {
+        this.registerData = res.document;
+        console.log(this.registerData);
+
+      });
+    });
+  }
 }

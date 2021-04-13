@@ -50,7 +50,7 @@
   </ion-toolbar>
 </ion-header>
 
-<ion-content>
+<ion-content >
   <div *ngIf="showData && !firstView ">
     <ion-list>
       <ion-item *ngFor="let item of examList ; let i = index" (click)="goToUrl(item.exam_id)">

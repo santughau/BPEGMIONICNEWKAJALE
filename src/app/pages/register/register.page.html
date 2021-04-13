@@ -1,9 +1,95 @@
-<ion-header>
-  <ion-toolbar>
-    <ion-title>register</ion-title>
-  </ion-toolbar>
-</ion-header>
-
 <ion-content>
+  <div class="row ">
+    <div class="col-md-12 bk">
+      <div class="quiz-box custom-box">
 
+
+        <div>
+          <h2 class=" text-center text-muted ">आपली माहिती भरा</h2>
+          <hr class="bg-primary">
+        </div>
+        <form #registration="ngForm">
+          <ion-item>
+            <ion-label class="text-danger" position="floating">संपूर्ण नाव</ion-label>
+            <ion-input type="text" placeholder="संपूर्ण नाव " name="profile_fullname" #profile_fullname="ngModel"
+              [(ngModel)]="registerData.profile_fullname" required></ion-input>
+          </ion-item>
+          <div *ngIf="profile_fullname.invalid && profile_fullname.touched ">
+            <ion-text color="danger text-center">
+              <h4 style="padding-left: 20px; margin-top: 10px;">कृपया संपूर्ण नाव लिहावे</h4>
+            </ion-text>
+          </div>
+          <ion-item>
+            <ion-label class="text-danger" position="floating">मोबाईल क्रमांक</ion-label>
+            <ion-input type="text" placeholder="मोबाईल  क्रमांक " name="profile_mobile" #profile_mobile="ngModel"
+              [(ngModel)]="registerData.profile_mobile" required></ion-input>
+          </ion-item>
+          <div *ngIf="profile_mobile.invalid && profile_mobile.touched ">
+            <ion-text color="danger text-center">
+              <h4 style="padding-left: 20px; margin-top: 10px;">कृपया मोबाईल क्रमांक लिहावा</h4>
+            </ion-text>
+          </div>
+          <ion-item>
+            <ion-label class="text-danger" position="floating">ई-मेल ऍड्रेस</ion-label>
+            <ion-input type="email" placeholder="ई-मेल" name="profile_email" #profile_email="ngModel"
+              [(ngModel)]="registerData.profile_email" required email></ion-input>
+          </ion-item>
+          <div *ngIf="profile_email.invalid && profile_email.touched ">
+            <ion-text color="danger text-center">
+              <h4 style="padding-left: 20px; margin-top: 10px;">कृपया ई-मेल लिहावा</h4>
+            </ion-text>
+          </div>
+          <ion-item>
+            <ion-label class="text-danger" position="floating">जिल्हा</ion-label>
+            <ion-select name="profile_distId" #profile_distId="ngModel" [(ngModel)]="registerData.profile_distId"
+              required (ionChange)="OnDistrictChange($event)" interface="action-sheet" mode="ios"
+              placeholder="जिल्हा निवडा ">
+              <ion-select-option value="100">खालील पैकी एक</ion-select-option>
+              <ion-select-option value="{{item.district_id}}" *ngFor="let item of district">{{item.district_name}}
+              </ion-select-option>
+            </ion-select>
+          </ion-item>
+          <div *ngIf="profile_distId.invalid && profile_distId.touched ">
+            <ion-text color="danger text-center">
+              <h4 style="padding-left: 20px; margin-top: 10px;">कृपया जिल्हा निवडावा</h4>
+            </ion-text>
+          </div>
+          <ion-item>
+            <ion-label class="text-danger" position="floating">तालुका</ion-label>
+            <ion-select name="profile_taluka" #profile_taluka="ngModel" [(ngModel)]="registerData.profile_taluka"
+              (ionChange)="OnTalukaChange($event)" required interface="action-sheet" mode="ios"
+              placeholder="तालुका निवडा ">
+              <ion-select-option value="100">खालील पैकी एक</ion-select-option>
+              <ion-select-option value="{{item.taluka_id}}" *ngFor="let item of taluka">{{item.taluka_name}}
+              </ion-select-option>
+            </ion-select>
+          </ion-item>
+          <div *ngIf="profile_taluka.invalid && profile_taluka.touched ">
+            <ion-text color="danger text-center">
+              <h4 style="padding-left: 20px; margin-top: 10px;">कृपया तालुका निवडावा</h4>
+            </ion-text>
+          </div>
+          <ion-item>
+            <ion-label class="text-danger" position="floating">पासवर्ड</ion-label>
+            <ion-input type="password" placeholder="पासवर्ड लिहा " name="profile_password" #profile_password="ngModel"
+              [(ngModel)]="registerData.profile_password" required></ion-input>
+          </ion-item>
+          <div *ngIf="profile_password.invalid && profile_password.touched ">
+            <ion-text color="danger text-center">
+              <h4 style="padding-left: 20px; margin-top: 10px;">कृपया पासवर्ड लिहावा</h4>
+            </ion-text>
+          </div>
+
+          <div class="mt-5">
+            <ion-button [disabled]="registration.invalid" (click)="saveTeacher(registration)" color="danger"
+              expand="block">लॉगिन करा</ion-button>
+          </div>
+        </form>
+        <div class="mt-2">
+          <p class="text-center text-muted">ई-मेल व पासवर्ड माहित आहे, <a routerLinkActive="active"
+              routerLink="/login">लॉगिन करा</a></p>
+        </div>
+      </div>
+    </div>
+  </div>
 </ion-content>

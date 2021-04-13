@@ -5,7 +5,7 @@ import { Observable } from 'rxjs';
   providedIn: 'root'
 })
 export class MyServiceService {
-  url = 'https://bpegm.co/quiz/';
+  url = 'http://localhost/quiz/';
   constructor(private http: HttpClient) { }
   getAllClasses(pageno: any, pagesize: any): Observable<any> {
     return this.http.get(
@@ -50,31 +50,17 @@ export class MyServiceService {
   }
 
   saveExamResult(data: any): Observable<any> {
-    console.log("service " + data);
-
-
-    let headers = new HttpHeaders({
-      'Content-Type': 'application/json; charset=UTF-8',
-      'Access-Control-Allow-Origin': '*',
-      'Access-Control-Allow-Methods': 'POST',
-      'Access-Control-Max-Age': '86400',
-      'Access-Control-Allow-Headers': 'Content-Type, Access-Control-Allow-Headers, Authorization, X-Requested-With'
-    });
-    let options = { headers: headers };
-    return this.http.post<any>('https://bpegm.co/quiz/leaderboard/create.php', data);
+    return this.http.post<any>(this.url + 'leaderboard/create.php', data);
   }
-  saveExamResulta(data: any): Observable<any> {
-    console.log("service " + data);
 
+  saveRegister(data: any): Observable<any> {
+    return this.http.post<any>(this.url + 'profile/create.php', data);
+  }
+  getProfile(Id: any): Observable<any> {
+    return this.http.get(this.url + 'profile/read_one.php?id=' + Id);
+  }
 
-    let headers = new HttpHeaders({
-      'Content-Type': 'application/json; charset=UTF-8',
-      'Access-Control-Allow-Origin': '*',
-      'Access-Control-Allow-Methods': 'POST',
-      'Access-Control-Max-Age': '86400',
-      'Access-Control-Allow-Headers': 'Content-Type, Access-Control-Allow-Headers, Authorization, X-Requested-With'
-    });
-    let options = { headers: headers };
-    return this.http.post<any>('http://localhost/quiz/leaderboard/create.php', data);
+  getLeaderboardData(Id: any): Observable<any> {
+    return this.http.get(this.url + 'leaderboard/read_by_leaderboard_profileid.php?leaderBoard_profileId=' + Id);
   }
 }

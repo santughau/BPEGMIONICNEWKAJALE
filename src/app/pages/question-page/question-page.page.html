@@ -12,11 +12,13 @@
       <div class="quiz-box custom-box" *ngIf="show">
         <div class="question-number">प्रश्न क्रमांक : {{question_count+1}} / {{questions.length}} <span
             style="float: right;">{{formatted_min}}:{{formatted_sec}}</span></div>
-        <div style="text-align: justify;" class="question-text text-danger" [innerHtml]="questions[question_count]?.question"></div>
+        <div style="text-align: justify;" class="question-text text-danger"
+          [innerHtml]="questions[question_count]?.question"></div>
         <div class="option-container">
 
-          <div style="text-align: justify;" id="0" class="option " *ngFor="let item of questions[question_count]?.options; let i = index"
-            [style.animation-delay.s]="i" (click)="toggleClass(i)" [innerHtml]="item"></div>
+          <div style="text-align: justify;" id="0" class="option "
+            *ngFor="let item of questions[question_count]?.options; let i = index" [style.animation-delay.s]="i"
+            (click)="toggleClass(i)" [innerHtml]="item"></div>
         </div>
         <div class="next-question-btn">
           <button [disabled]="btnDissabled" class="btn" type="button" (click)="next()">{{buttonTitle}}</button>
@@ -25,7 +27,7 @@
           <div *ngFor="let item of questions; let i = index"></div>
         </div>
       </div>
-      <div class="result-box custom-box" *ngIf="!show">
+      <div class="result-box custom-box" *ngIf="!show" style="height: 100vh;">
         <h1>निकाल</h1>
         <form #resultForm="ngForm">
           <table>
@@ -50,11 +52,7 @@
               <td class="bg-dark text-white">लागलेला वेळ </td>
               <td class="percentage">{{formatted_min}} : {{formatted_sec}}</td>
             </tr>
-
-
-
-          </table>
-          <button type="button" [disabled]="resultForm.invalid" class="btn" (click)="onSave()">सबमिट करा</button>
+          </table>         
         </form>
       </div>
     </div>
