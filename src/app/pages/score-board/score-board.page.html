@@ -8,7 +8,8 @@
 </ion-header>
 
 <ion-content>
-  <ion-list>
+  <div *ngIf="showData">
+  <ion-list >
     <ion-item *ngFor="let item of collection"> 
       <ion-label  >
         <h2> <b class="text-primary">{{item.exam_name}}</b></h2>
@@ -17,5 +18,17 @@
     </ion-item>
    
   </ion-list>
+  </div>
+
+  <div *ngIf="!showData" class="text-danger text-center">
+    <ion-card color="danger">
+      <ion-card-header>
+        <ion-card-title>महत्वाची सूचना</ion-card-title>
+      </ion-card-header>
+      <ion-card-content>
+      आपण अद्याप एकही परीक्षा दिलेली नाही , कृपया परीक्षा दयावे .
+      </ion-card-content>
+    </ion-card>
+  </div>
 
 </ion-content>

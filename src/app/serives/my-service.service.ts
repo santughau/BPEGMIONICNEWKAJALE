@@ -5,7 +5,7 @@ import { Observable } from 'rxjs';
   providedIn: 'root'
 })
 export class MyServiceService {
-  url = 'http://localhost/quiz/';
+  url = 'https://bpegm.co/quiz/';
   constructor(private http: HttpClient) { }
   getAllClasses(pageno: any, pagesize: any): Observable<any> {
     return this.http.get(
@@ -62,5 +62,11 @@ export class MyServiceService {
 
   getLeaderboardData(Id: any): Observable<any> {
     return this.http.get(this.url + 'leaderboard/read_by_leaderboard_profileid.php?leaderBoard_profileId=' + Id);
+  }
+
+  getAllDownloads(pageno, pagesize): Observable<any> {
+    return this.http.get(
+      this.url + "downloaddata/read.php?pageno=" + pageno + "&pagesize=" + pagesize
+    );
   }
 }

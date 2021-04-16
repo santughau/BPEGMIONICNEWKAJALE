@@ -77,7 +77,7 @@ export class QuestionPagePage implements OnInit {
       this.uid = user.uid;
       this.service.getProfile(this.uid).subscribe((res) => {
         this.registerData = res.document;
-        // console.log(this.registerData);
+
 
       });
     });
@@ -85,7 +85,7 @@ export class QuestionPagePage implements OnInit {
 
   async presentLoading() {
     const loading = await this.loadingController.create({
-      message: 'कृपया थोडा वेळ वाट पाहा ..... ',
+      message: 'कृपया  थोडा वेळ वाट पहा आम्ही सर्वर वरून डेटा तुमच्या करिता  घेऊन येत आहोत .... ',
     });
     await loading.present();
   }
@@ -200,12 +200,12 @@ export class QuestionPagePage implements OnInit {
       leaderboard_time: this.formatted_min + ':' + this.formatted_sec,
       leaderBoard_marks: (100 * this.correctAnswer / this.questions.length).toFixed(2)
     }
-    console.log(this.saveData);
+
     this.service.saveExamResult(this.saveData).subscribe((res) => {
-      console.log(res);
+
 
     }, error => {
-      console.log(error);
+
 
     })
 

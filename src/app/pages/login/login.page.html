@@ -7,6 +7,7 @@
         <div>
           <img class="imgwidth" src="../../../assets/logo.jpg" />
         </div>
+        <form #registration="ngForm">
         <ion-item>
           <ion-label class="text-danger" position="floating">ई-मेल ऍड्रेस</ion-label>
           <ion-input type="email" placeholder="ई-मेल" name="email" #email="ngModel" [(ngModel)]="registerData.email" required
@@ -27,9 +28,11 @@
             <h4 style="padding-left: 20px; margin-top: 10px;">कृपया पासवर्ड लिहावा</h4>
           </ion-text>
         </div>
+       
       <div class="mt-5">
-          <ion-button color="danger" expand="block">लॉगिन करा</ion-button>
+          <ion-button color="danger" (click)="goToHome()" expand="block"  [disabled]="registration.invalid">लॉगिन करा</ion-button>
       </div>
+      </form>
       <div class="mt-2">
         <p class="text-center text-muted">नवीन खाते तयार करा <a routerLinkActive="active" routerLink="/register">Sign Up</a></p>
       </div>

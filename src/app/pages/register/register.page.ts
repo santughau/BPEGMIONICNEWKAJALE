@@ -27,8 +27,6 @@ export class RegisterPage implements OnInit {
     this.presentLoading().then(() => {
       this.service.getDistrictList().subscribe((res) => {
         this.district = res.document.records;
-        console.log(this.district);
-
         this.loadingController.dismiss();
       });
     });
@@ -49,18 +47,16 @@ export class RegisterPage implements OnInit {
   async presentLoading() {
     const loading = await this.loadingController.create({
       cssClass: "my-custom-class",
-      message: "Please wait...",
+      message: "कृपया  थोडा वेळ वाट पहा आम्ही सर्वर वरून डेटा तुमच्या करिता  घेऊन येत आहोत .... ",
     });
     await loading.present();
   }
 
   OnDistrictChange(ev) {
     this.registerData.profile_distId = ev.target.value;
-    console.log(this.registerData.profile_distId);
     this.presentLoading().then(() => {
       this.service.getTalukaList(this.registerData.profile_distId).subscribe((data) => {
         this.taluka = data.document.records;
-        console.log(this.taluka);
         this.loadingController.dismiss();
       });
     });
@@ -68,23 +64,26 @@ export class RegisterPage implements OnInit {
 
   OnTalukaChange(ev) {
     this.registerData.profile_taluka = ev.target.value;
-    console.log(this.registerData.profile_taluka);
+
   }
 
   saveTeacher() {
-    console.log(this.registerData);
     const data = {
       email: this.registerData.profile_email,
       password: this.registerData.profile_password,
     };
 
-    this.auth
-      .createUserWithEmailAndPassword(data.email, data.password)
+    this.auth.createUserWithEmailAndPassword(data.email, data.password)
       .then((user) => {
-        this.registerData.profile_uid = user.user.uid;
-        this.service.saveRegister(this.registerData).subscribe((res) => {
-          this.router.navigate(["/home"]);
+        this.presentLoading().then(() => {
+          this.registerData.profile_uid = user.user.uid;
+          console.log(this.registerData);
+          this.service.saveRegister(this.registerData).subscribe((res) => {
+            this.loadingController.dismiss();
+            this.router.navigate(["/home"]);
+          });
         });
+
       })
       .catch((err) => {
         var msg = "";

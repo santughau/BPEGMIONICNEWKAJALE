@@ -29,7 +29,7 @@
 
           <div class="mb-3">
             <label class="form-label text-danger">पासवर्ड</label><br>
-            <ion-button expand="block" color="primary" (click)="showPassword()" >दाखवा</ion-button>
+            <ion-button expand="block" color="primary" (click)="showPassword()" >{{ show ? 'Hide' : 'Show' }}</ion-button>
             <hr>
             <input *ngIf="show"  type="text" required disabled class="form-control form-control-lg" [value]="registerData.profile_password">
           </div>

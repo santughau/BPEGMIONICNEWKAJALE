@@ -7,10 +7,10 @@ import { IonicModule } from '@ionic/angular';
 import { DownloadPageRoutingModule } from './download-routing.module';
 
 import { DownloadPage } from './download.page';
-
+import { Ng2SearchPipeModule } from 'ng2-search-filter';
 @NgModule({
   imports: [
-    CommonModule,
+    CommonModule, Ng2SearchPipeModule,
     FormsModule,
     IonicModule,
     DownloadPageRoutingModule

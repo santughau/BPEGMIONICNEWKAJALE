@@ -24,15 +24,23 @@ export class YoutubePage implements OnInit {
   errorMessage = "";
   showData: boolean = true;
   firstView: boolean = true;
-  constructor(private youtube: YoutubeVideoPlayer,private service: MyServiceService, public loadingController: LoadingController, private _router: Router) { }
+  constructor(private youtube: YoutubeVideoPlayer, private service: MyServiceService, public loadingController: LoadingController, private _router: Router) { }
 
   ngOnInit(): void {
-    this.showLoadingIndicator = true
-    this.service.getAllClasses(this.pageno, this.pagesize).subscribe((res) => {
-      this.datas = res.document.records;
-      this.showLoadingIndicator = false;
-
+    this.presentLoading().then(() => {
+      this.service.getAllClasses(this.pageno, this.pagesize).subscribe((res) => {
+        this.datas = res.document.records;
+        this.loadingController.dismiss();
+      })
     })
+
+  }
+
+  async presentLoading() {
+    const loading = await this.loadingController.create({
+      message: 'कृपया  थोडा वेळ वाट पहा आम्ही सर्वर वरून डेटा तुमच्या करिता  घेऊन येत आहोत .... ',
+    });
+    await loading.present();
   }
 
   onChangeClass(ev: any) {
@@ -44,10 +52,15 @@ export class YoutubePage implements OnInit {
     } else {
       this.showLoadingIndicator = true
       this.allChapters = [];
-      this.service.getSubjectList(this.classId).subscribe((data) => {
-        this.allSubject = data.document.records;
-        this.showLoadingIndicator = false;
-      });
+      this.presentLoading().then(() => {
+        this.service.getSubjectList(this.classId).subscribe((data) => {
+          this.allSubject = data.document.records;
+          this.loadingController.dismiss();
+          this.showLoadingIndicator = false;
+
+        });
+      })
+
     }
   }
 
@@ -58,10 +71,14 @@ export class YoutubePage implements OnInit {
       this.allChapters = [];
     } else {
       this.showLoadingIndicator = true
-      this.service.getChapterList(this.subId).subscribe((data) => {
-        this.allChapters = data.document.records;
-        this.showLoadingIndicator = false;
+      this.presentLoading().then(() => {
+        this.service.getChapterList(this.subId).subscribe((data) => {
+          this.allChapters = data.document.records;
+          this.loadingController.dismiss();
+          this.showLoadingIndicator = false;
+        });
       });
+
     }
   }
 
@@ -72,24 +89,22 @@ export class YoutubePage implements OnInit {
       this.showLoadingIndicator = false;
       this.videoList = [];
     } else {
-      this.showLoadingIndicator = true
-      this.service.getVideoList(this.chapterId).subscribe((data) => {
-        ;
-
-        this.videoList = data.document.records;
-        this.showData = true;
-        console.log(this.videoList);
-
-        this.showLoadingIndicator = false;
-      }, (error) => {
-        console.error('error caught in component')
-        this.errorMessage = error;
-        this.videoList = [];
-        console.log(this.videoList);
-        this.showData = false;
-        this.showLoadingIndicator = false;
-
+      this.showLoadingIndicator = true;
+      this.presentLoading().then(() => {
+        this.service.getVideoList(this.chapterId).subscribe((data) => {
+          this.videoList = data.document.records;
+          this.loadingController.dismiss();
+          this.showData = true;
+          this.showLoadingIndicator = false;
+        }, (error) => {
+          this.loadingController.dismiss();
+          this.errorMessage = error;
+          this.videoList = [];
+          this.showData = false;
+          this.showLoadingIndicator = false;
+        });
       });
+
     }
   }
 

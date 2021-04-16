@@ -28,7 +28,6 @@ export class QuizPage implements OnInit {
       this.service.getAllClasses(this.pageno, this.pagesize).subscribe((res) => {
         this.datas = res.document.records;
         this.loadingController.dismiss();
-        console.log(this.datas);
       })
     })
 
@@ -36,14 +35,14 @@ export class QuizPage implements OnInit {
 
   async presentLoading() {
     const loading = await this.loadingController.create({
-      message: 'Please wait...',
+      message: 'कृपया  थोडा वेळ वाट पहा आम्ही सर्वर वरून डेटा तुमच्या करिता  घेऊन येत आहोत .... ',
     });
     await loading.present();
   }
 
   onChangeClass(ev: any) {
     this.classId = ev.target.value;
-    console.log(this.classId);
+
 
     if (ev.target.value == 100) {
       this.allSubject = [];
@@ -54,7 +53,7 @@ export class QuizPage implements OnInit {
         this.service.getSubjectList(this.classId).subscribe((data) => {
           this.allSubject = data.document.records;
           this.loadingController.dismiss()
-          console.log(this.allSubject);
+
 
         });
       })
@@ -89,14 +88,12 @@ export class QuizPage implements OnInit {
         this.service.getExamList(this.chapterId).subscribe((data) => {
           this.examList = data.document.records;
           this.showData = true;
-          console.log(this.examList);
           this.loadingController.dismiss();
         }, (error) => {
           this.loadingController.dismiss();
-          console.error('error caught in component')
           this.errorMessage = error;
           this.examList = [];
-          console.log(this.examList);
+
           this.showData = false;
 
         });
@@ -106,7 +103,7 @@ export class QuizPage implements OnInit {
   }
 
   goToUrl(id: string) {
-    console.log(id);
+
     this._router.navigate(['/question-page', id]);
   }
 

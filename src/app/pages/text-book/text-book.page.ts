@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { MyServiceService } from 'src/app/serives/my-service.service';
 import { InAppBrowser } from "@ionic-native/in-app-browser/ngx";
+import { LoadingController } from '@ionic/angular';
 @Component({
   selector: 'app-text-book',
   templateUrl: './text-book.page.html',
@@ -21,15 +22,25 @@ export class TextBookPage implements OnInit {
   errorMessage = "";
   showData: boolean = true;
   firstView: boolean = true;
-  constructor(private service: MyServiceService, private iab: InAppBrowser) { }
+  constructor(public loadingController: LoadingController, private service: MyServiceService, private iab: InAppBrowser) { }
 
   ngOnInit() {
-    this.showLoadingIndicator = true
-    this.service.getAllClasses(this.pageno, this.pagesize).subscribe((res) => {
-      this.datas = res.document.records;
-      this.showLoadingIndicator = false;
+    this.showLoadingIndicator = true;
+    this.presentLoading().then(() => {
+      this.service.getAllClasses(this.pageno, this.pagesize).subscribe((res) => {
+        this.datas = res.document.records;
+        this.loadingController.dismiss();
+        this.showLoadingIndicator = false;
+      })
+    });
 
-    })
+  }
+
+  async presentLoading() {
+    const loading = await this.loadingController.create({
+      message: 'कृपया  थोडा वेळ वाट पहा आम्ही सर्वर वरून डेटा तुमच्या करिता  घेऊन येत आहोत .... ',
+    });
+    await loading.present();
   }
   onChangeClass(ev: any) {
     this.classId = ev.target.value;
@@ -39,10 +50,12 @@ export class TextBookPage implements OnInit {
 
     } else {
       this.showLoadingIndicator = true;
-      this.service.getSubjectList(this.classId).subscribe((data) => {
-        this.allSubject = data.document.records;
-        console.log(this.allSubject);
-        this.showLoadingIndicator = false;
+      this.presentLoading().then(() => {
+        this.service.getSubjectList(this.classId).subscribe((data) => {
+          this.allSubject = data.document.records;
+          this.loadingController.dismiss();
+          this.showLoadingIndicator = false;
+        });
       });
     }
   }

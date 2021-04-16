@@ -25,7 +25,6 @@ export class HomePage implements OnInit {
       this.uid = user.uid;
       this.service.getProfile(this.uid).subscribe((res) => {
         this.registerData = res.document;
-        console.log(this.registerData);
 
       });
     });

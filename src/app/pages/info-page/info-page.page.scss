@@ -1,85 +1,26 @@
-#mainDiv{
-    background-color: #E70B89;
-    height:300px;
-  
-
-   
+#backgr{
+    background-color: #FF6EA1;
+    height: 640px;
 }
- #sanku{
-        color: white;
-        text-align: center;
-      padding-top: 20px;
-    }
-#upperDiv{
-    height: auto;
-    box-shadow: #E70B89;
-    z-index: 88;
-    margin-top: -150px;
-    width: 90%;
-    margin-left: auto;
-    margin-right: auto;
-    display: block;
-    background-color: white;
-     box-shadow: 0px 2px 20px #E70B89;
+ion-menu-button{
+    color: white;
 }
 
-input{
-    height: 50px;
-    border:1px solid black;
+#contentDiv{
+    margin-top: 30%;
+    margin-left: 20px;
+    margin-right: 20px;
+    width: auto;
+    background: white;
+    height: 300px;
+    border-radius: 10px;
 }
 
-#buttonSubmit{
-    height:55px; 
-    background-color: #E70B89; 
-    border-color: #E70B89;
-}
-
-#frtPassword{
-    margin-top:20px;
-    text-align: right;
-    color:#E70B89;
-    font-size: 14px;
-}
-#orLoginWith{
-    font-size: 12;
+#heading{
+    color: #FF6EA1;
     text-align: center;
-    color:#9D9D9D;
-    margin-top: 20px;
+    padding-top: 20px;
 }
-#social{
-   
-}
-.facebook{
-    height: 57px !important; 
-    border: 1px solid #dee2e6;
-   
-    margin-right: 30px;
-    width: 57px !important;
-     background-color: white;
-    float: right;  
-    
-}
-
-#regis{
+#paregr{
     text-align: center;
-    margin-top: 25px;
-    font-size: 12px;
-    color:#9D9D9D;
-    margin-bottom: 40px;
-    z-index: -55;
-}
-#lowerDiv{
-    background-color:#E70B89 ;
-    height: 25px;
-    width: 100%;
-    margin-bottom: -40px;
-    
-}
-
-#terms{
-  font-size: 12px;
-  color: #1A1A1A;
-  margin-top:20px;
-  text-align: center;
-  margin-bottom: 10px;
 }

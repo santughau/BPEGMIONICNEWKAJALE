@@ -11,7 +11,7 @@
         <ion-col size="12">
           <ion-label class="text-center">वर्ग</ion-label>
           <ion-item>
-            <ion-select placeholder="वर्ग निवडा" interface="popover" mode="ios" name="classes" required
+            <ion-select placeholder="वर्ग निवडा" interface="action-sheet" mode="ios" name="classes" required
               (ionChange)="onChangeClass($event)">
               <ion-select-option value="100">
                 खालील पैकी एक</ion-select-option>
@@ -27,11 +27,9 @@
   </ion-toolbar>
 </ion-header>
 <ion-content>
-  <ion-grid>
-    <ion-row>
-      <ion-col size="6" *ngFor="let item of allSubject" (click)="goToLink(item.allSubject_pdfLink)">
-        <ion-img [src]="item.allSubject_image"></ion-img>
-      </ion-col>
-    </ion-row>
-  </ion-grid>
+  <ion-list>
+    <ion-item *ngFor="let item of allSubject" (click)="goToLink(item.allSubject_pdfLink)">
+      <ion-label>{{item.allSubject_subjectName}}</ion-label>
+    </ion-item>
+  </ion-list>
 </ion-content>

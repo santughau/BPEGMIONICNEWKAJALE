@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { MyServiceService } from 'src/app/serives/my-service.service';
 import { InAppBrowser } from "@ionic-native/in-app-browser/ngx";
+import { LoadingController } from '@ionic/angular';
 @Component({
   selector: 'app-worksheet',
   templateUrl: './worksheet.page.html',
@@ -21,16 +22,27 @@ export class WorksheetPage implements OnInit {
   errorMessage = "";
   showData: boolean = true;
   firstView: boolean = true;
-  constructor(private iab: InAppBrowser, private service: MyServiceService) { }
+  constructor(public loadingController: LoadingController, private iab: InAppBrowser, private service: MyServiceService) { }
 
   ngOnInit() {
-    this.showLoadingIndicator = true
-    this.service.getAllClasses(this.pageno, this.pagesize).subscribe((res) => {
-      this.datas = res.document.records;
-      this.showLoadingIndicator = false;
+    this.showLoadingIndicator = true;
+    this.presentLoading().then(() => {
+      this.service.getAllClasses(this.pageno, this.pagesize).subscribe((res) => {
+        this.datas = res.document.records;
+        this.loadingController.dismiss();
+        this.showLoadingIndicator = false;
+      })
+    });
 
-    })
   }
+
+  async presentLoading() {
+    const loading = await this.loadingController.create({
+      message: 'कृपया  थोडा वेळ वाट पहा आम्ही सर्वर वरून डेटा तुमच्या करिता  घेऊन येत आहोत .... ',
+    });
+    await loading.present();
+  }
+
 
   onChangeClass(ev: any) {
     this.classId = ev.target.value;
@@ -41,10 +53,14 @@ export class WorksheetPage implements OnInit {
     } else {
       this.showLoadingIndicator = true
       this.allChapters = [];
-      this.service.getSubjectList(this.classId).subscribe((data) => {
-        this.allSubject = data.document.records;
-        this.showLoadingIndicator = false;
+      this.presentLoading().then(() => {
+        this.service.getSubjectList(this.classId).subscribe((data) => {
+          this.allSubject = data.document.records;
+          this.loadingController.dismiss();
+          this.showLoadingIndicator = false;
+        });
       });
+
     }
   }
 
@@ -54,11 +70,15 @@ export class WorksheetPage implements OnInit {
       this.showLoadingIndicator = false;
       this.allChapters = [];
     } else {
-      this.showLoadingIndicator = true
-      this.service.getChapterList(this.subId).subscribe((data) => {
-        this.allChapters = data.document.records;
-        this.showLoadingIndicator = false;
+      this.showLoadingIndicator = true;
+      this.presentLoading().then(() => {
+        this.service.getChapterList(this.subId).subscribe((data) => {
+          this.allChapters = data.document.records;
+          this.loadingController.dismiss();
+          this.showLoadingIndicator = false;
+        });
       });
+
     }
   }
 
@@ -69,28 +89,26 @@ export class WorksheetPage implements OnInit {
       this.showLoadingIndicator = false;
       this.homeworkList = [];
     } else {
-      this.showLoadingIndicator = true
-      this.service.getHomeList(this.chapterId).subscribe((data) => {
-
-        this.homeworkList = data.document.records;
-        this.showData = true;
-        console.log(this.homeworkList);
-
-        this.showLoadingIndicator = false;
-      }, (error) => {
-        console.error('error caught in component')
-        this.errorMessage = error;
-        this.homeworkList = [];
-        console.log(this.homeworkList);
-        this.showData = false;
-        this.showLoadingIndicator = false;
-
+      this.showLoadingIndicator = true;
+      this.presentLoading().then(() => {
+        this.service.getHomeList(this.chapterId).subscribe((data) => {
+          this.homeworkList = data.document.records;
+          this.loadingController.dismiss();
+          this.showData = true;
+          this.showLoadingIndicator = false;
+        }, (error) => {
+          this.loadingController.dismiss();
+          this.errorMessage = error;
+          this.homeworkList = [];
+          this.showData = false;
+          this.showLoadingIndicator = false;
+        });
       });
+
     }
   }
 
   onChangeHomework(link: string) {
-    console.log(link);
     const browser = this.iab.create(link, "_system");
     browser.show();
   }
