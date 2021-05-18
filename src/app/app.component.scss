@@ -13,6 +13,11 @@ ion-menu.md ion-list {
   padding: 20px 0;
 }
 
+
+.my-custom-class .alert-wrapper {
+  z-index: 999;
+}
+
 ion-menu.md ion-note {
   margin-bottom: 30px;
 }
@@ -131,6 +136,7 @@ ion-item.selected {
   margin-left: -18px;
   margin-top: -58px;
   margin-bottom: 60px;
+  
 }
 
 .header-containt {

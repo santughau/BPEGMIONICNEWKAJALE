@@ -24,16 +24,14 @@ export class YoutubePage implements OnInit {
   errorMessage = "";
   showData: boolean = true;
   firstView: boolean = true;
+  skleton = false;
   constructor(private youtube: YoutubeVideoPlayer, private service: MyServiceService, public loadingController: LoadingController, private _router: Router) { }
 
-  ngOnInit(): void {
-    this.presentLoading().then(() => {
+  ngOnInit(): void {    
       this.service.getAllClasses(this.pageno, this.pagesize).subscribe((res) => {
         this.datas = res.document.records;
-        this.loadingController.dismiss();
-      })
-    })
-
+        this.skleton = true;
+      }) 
   }
 
   async presentLoading() {
@@ -44,6 +42,7 @@ export class YoutubePage implements OnInit {
   }
 
   onChangeClass(ev: any) {
+    this.skleton = false;
     this.classId = ev.target.value;
     if (ev.target.value == 100) {
       this.showLoadingIndicator = false;
@@ -51,60 +50,52 @@ export class YoutubePage implements OnInit {
       this.allChapters = [];
     } else {
       this.showLoadingIndicator = true
-      this.allChapters = [];
-      this.presentLoading().then(() => {
+      this.allChapters = [];      
         this.service.getSubjectList(this.classId).subscribe((data) => {
           this.allSubject = data.document.records;
-          this.loadingController.dismiss();
+          this.skleton = true;
           this.showLoadingIndicator = false;
-
-        });
-      })
-
+        }); 
     }
   }
 
   onChangeSub(ev: any) {
+    this.skleton = false;
     this.subId = ev.target.value;
     if (ev.target.value == 100) {
       this.showLoadingIndicator = false;
       this.allChapters = [];
     } else {
-      this.showLoadingIndicator = true
-      this.presentLoading().then(() => {
+      this.showLoadingIndicator = true;    
         this.service.getChapterList(this.subId).subscribe((data) => {
           this.allChapters = data.document.records;
-          this.loadingController.dismiss();
+          this.skleton = true;
           this.showLoadingIndicator = false;
         });
-      });
-
     }
   }
 
   onChangeChapter(ev: any) {
+    this.skleton = false;
     this.firstView = false;
     this.chapterId = ev.target.value;
     if (ev.target.value == 100) {
       this.showLoadingIndicator = false;
       this.videoList = [];
     } else {
-      this.showLoadingIndicator = true;
-      this.presentLoading().then(() => {
+      this.showLoadingIndicator = true;      
         this.service.getVideoList(this.chapterId).subscribe((data) => {
           this.videoList = data.document.records;
-          this.loadingController.dismiss();
+          this.skleton = true;
           this.showData = true;
           this.showLoadingIndicator = false;
         }, (error) => {
-          this.loadingController.dismiss();
+          this.skleton = true;
           this.errorMessage = error;
           this.videoList = [];
           this.showData = false;
           this.showLoadingIndicator = false;
         });
-      });
-
     }
   }
 

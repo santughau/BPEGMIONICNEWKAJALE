@@ -21,20 +21,20 @@ export class QuestionPapersPage implements OnInit {
   errorMessage = "";
   showData: boolean = true;
   firstView: boolean = true;
-
+  skleton = false;
   termData: any[] = [
   ]
   constructor(public loadingController: LoadingController, private service: MyServiceService) { }
 
   ngOnInit(): void {
     this.showLoadingIndicator = true;
-    this.presentLoading().then(() => {
-      this.service.getAllClasses(this.pageno, this.pagesize).subscribe((res) => {
-        this.datas = res.document.records;
-        this.loadingController.dismiss();
-        this.showLoadingIndicator = false;
-      })
-    });
+
+    this.service.getAllClasses(this.pageno, this.pagesize).subscribe((res) => {
+      this.datas = res.document.records;
+      this.skleton = true;
+      this.showLoadingIndicator = false;
+    })
+
 
   }
 
@@ -46,6 +46,7 @@ export class QuestionPapersPage implements OnInit {
   }
 
   onChangeClass(ev: any) {
+    this.skleton = false;
     this.classId = ev.target.value;
     if (ev.target.value == 100) {
       this.showLoadingIndicator = false;
@@ -54,18 +55,16 @@ export class QuestionPapersPage implements OnInit {
     } else {
       this.showLoadingIndicator = true
       this.allChapters = [];
-      this.presentLoading().then(() => {
-        this.service.getSubjectList(this.classId).subscribe((data) => {
-          this.allSubject = data.document.records;
-          this.loadingController.dismiss();
-          this.showLoadingIndicator = false;
-        });
+      this.service.getSubjectList(this.classId).subscribe((data) => {
+        this.allSubject = data.document.records;
+        this.skleton = true;
+        this.showLoadingIndicator = false;
       });
-
     }
   }
 
   onChangeSub(ev: any) {
+    this.skleton = false;
     this.termData = [];
     this.termData = [
       { id: 1, termName: "प्रथम घटक चाचणी" },
@@ -81,18 +80,16 @@ export class QuestionPapersPage implements OnInit {
       this.allChapters = [];
     } else {
       this.showLoadingIndicator = true;
-      this.presentLoading().then(() => {
-        this.service.getChapterList(this.subId).subscribe((data) => {
-          this.allChapters = data.document.records;
-          this.loadingController.dismiss();
-          this.showLoadingIndicator = false;
-        });
+      this.service.getChapterList(this.subId).subscribe((data) => {
+        this.allChapters = data.document.records;
+        this.skleton = true;
+        this.showLoadingIndicator = false;
       });
-
     }
   }
 
   onChangeTerm(ev: any) {
+    this.skleton = false;
     this.firstView = false;
     this.termId = ev.target.value;
     if (ev.target.value == 100) {
@@ -100,26 +97,27 @@ export class QuestionPapersPage implements OnInit {
       this.termList = [];
     } else {
       this.showLoadingIndicator = true;
-      this.presentLoading().then(() => {
-        this.service.getTermList(this.subId, this.termId).subscribe((data) => {
-          this.termList = data.document.records;
-          this.loadingController.dismiss();
-          this.showData = true;
-          this.showLoadingIndicator = false;
-        }, (error) => {
-          this.loadingController.dismiss();
-          this.errorMessage = error;
-          this.termList = [];
-          this.showData = false;
-          this.showLoadingIndicator = false;
-        });
+      this.service.getTermList(this.subId, this.termId).subscribe((data) => {
+        this.termList = data.document.records;
+        this.skleton = true;
+        this.showData = true;
+        this.showLoadingIndicator = false;
+      }, (error) => {
+        this.skleton = true;
+        this.errorMessage = error;
+        this.termList = [];
+        this.showData = false;
+        this.showLoadingIndicator = false;
       });
-
     }
   }
 
   goToUrl(url: string) {
     window.open(url, '_blank');
+  }
+
+  onChangeHomework(id) {
+
   }
 
 }

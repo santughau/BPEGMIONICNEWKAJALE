@@ -67,7 +67,7 @@ export class RegisterPage implements OnInit {
 
   }
 
-  saveTeacher() {
+  saveTeacher(id) {
     const data = {
       email: this.registerData.profile_email,
       password: this.registerData.profile_password,

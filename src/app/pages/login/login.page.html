@@ -20,7 +20,7 @@
         </div>
         <ion-item>
           <ion-label class="text-danger" position="floating">पासवर्ड</ion-label>
-          <ion-input type="text" placeholder="पासवर्ड लिहा " name="password" #password="ngModel"
+          <ion-input type="password" placeholder="पासवर्ड लिहा " name="password" #password="ngModel"
             [(ngModel)]="registerData.password" required></ion-input>
         </ion-item>
         <div *ngIf="password.invalid && password.touched ">

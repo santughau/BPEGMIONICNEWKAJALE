@@ -12,6 +12,7 @@ export class DownloadPage implements OnInit {
   pageno = 1;
   pagesize = 10;
   term;
+  skleton = false;
   constructor(private service: MyServiceService, public loadingController: LoadingController,
     public toastController: ToastController,
     private iab: InAppBrowser) { }
@@ -40,31 +41,27 @@ export class DownloadPage implements OnInit {
   getData(ev) {
     if (ev == null) {
       this.pageno = 1;
-      this.pagesize = 10;
-      this.presentLoading().then(() => {
+      this.pagesize = 10;   
         this.service
           .getAllDownloads(this.pageno, this.pagesize)
           .subscribe((data) => {
             this.data = data.document.records;
-            this.loadingController.dismiss();
-          });
-      });
+             this.skleton = true;
+          });  
     } else {
-      this.pageno++;
-      this.presentLoading().then(() => {
+      this.pageno++;      
         this.service
           .getAllDownloads(this.pageno, this.pagesize)
           .subscribe((data) => {
             this.data = this.data.concat(data.document.records);
 
-            this.loadingController.dismiss();
+            this.skleton = true;
             if (data.document.records.length <= 10) {
               ev.target.disabled = true;
               this.presentToast();
             }
           });
-        ev.target.complete();
-      });
+        ev.target.complete();   
     }
   }
 

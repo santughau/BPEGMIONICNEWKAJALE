@@ -1,6 +1,6 @@
 import {
   Component, OnInit,
-  ViewChildren,
+  ViewChild,
   QueryList,
   OnDestroy,
 } from '@angular/core';
@@ -8,6 +8,8 @@ import { MyServiceService } from 'src/app/serives/my-service.service';
 import { AngularFireAuth } from "@angular/fire/auth";
 import { Platform, IonRouterOutlet, AlertController } from "@ionic/angular";
 import { Router } from '@angular/router';
+import { Location } from "@angular/common";
+import { Network } from '@ionic-native/network/ngx';
 
 @Component({
   selector: 'app-root',
@@ -15,8 +17,7 @@ import { Router } from '@angular/router';
   styleUrls: ['app.component.scss'],
 })
 export class AppComponent {
-  backButtonSubscription;
-  @ViewChildren(IonRouterOutlet) routerOutlets: QueryList<IonRouterOutlet>;
+  @ViewChild(IonRouterOutlet, { static: true }) routerOutlet: IonRouterOutlet;
   public appPages = [
     { title: 'मुख्य  पान ', url: '/home', icon: 'home' },
     { title: 'बहुपर्यायी प्रश्न पत्रिका ', url: '/quiz', icon: 'apps' },
@@ -45,55 +46,66 @@ export class AppComponent {
     profile_uid: "",
     profile_id: ""
   };
-  constructor(private platform: Platform, public alertController: AlertController, private service: MyServiceService, public auth: AngularFireAuth, private router: Router,) {
+  constructor(private network: Network, private location: Location, private platform: Platform, public alertController: AlertController, private service: MyServiceService, public auth: AngularFireAuth, private router: Router,) {
+
+
+
+
+    setTimeout(() => {
+      this.network.onDisconnect().subscribe(() => {
+        this.openAlert();
+        console.log("Disconnected Network");
+      });
+    }, 3000);
+
     this.platform.ready().then(() => {
       this.backButtonEvent();
     });
   }
 
   backButtonEvent() {
-    this.backButtonSubscription = this.platform.backButton.subscribe(
-      async () => {
-        this.routerOutlets.forEach((outlet: IonRouterOutlet) => {
-          if (outlet && outlet.canGoBack()) {
-            outlet.pop();
-          } else if (this.router.url === "/home") {
-            this.presentAlertConfirm();
-          }
-        });
+    this.platform.backButton.subscribeWithPriority(10, () => {
+      if (!this.routerOutlet.canGoBack()) {
+        this.backButtonAlert();
+      } else {
+        this.location.back();
       }
-    );
+    })
   }
 
-  async presentAlertConfirm() {
+  async openAlert() {
     const alert = await this.alertController.create({
-      header: "Confirm!",
-      message: "Confirm to Exit App !!!",
-      mode: "ios",
-      buttons: [
-        {
-          text: "Cancel",
-          role: "cancel",
-          cssClass: "secondary",
-          handler: (blah) => {
-            console.log("Confirm Cancel: blah");
-          },
-        },
-        {
-          text: "Exit",
-          handler: () => {
-            console.log("Confirm Okay");
-            navigator["app"].exitApp();
-          },
-        },
-      ],
+      header: 'Alert',
+      message: 'You do not have an Internet connection.',
+      cssClass: 'my-custom-class',
+      buttons: [{
+        text: "Ok",
+        handler: () => {
+          navigator['app'].exitApp();
+        }
+      }]
     });
     await alert.present();
   }
 
-  ngOnDestroy() {
-    this.backButtonSubscription.unsubscribe();
+  async backButtonAlert() {
+    const alert = await this.alertController.create({
+      message: "अँप बंद करायचे आहे काय ?",
+      buttons: [{
+        text: "रद्द करा ",
+        role: "Cancel"
+      },
+      {
+        text: "अँप बंद करा ",
+        handler: () => {
+          navigator['app'].exitApp();
+        }
+      }]
+    });
+    await alert.present();
   }
+
+
 
   ngOnInit() {
     this.auth.user.subscribe((user) => {

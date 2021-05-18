@@ -20,17 +20,18 @@ export class ProfilePage implements OnInit {
     profile_id: ""
   };
   show: boolean = false;
+  skleton = false;
   constructor(public loadingController: LoadingController,private service: MyServiceService, public auth: AngularFireAuth) { }
 
   ngOnInit() {
     this.auth.user.subscribe((user) => {
       this.uid = user.uid;
-      this.presentLoading().then(() => {
+      
         this.service.getProfile(this.uid).subscribe((res) => {
           this.registerData = res.document;
-          this.loadingController.dismiss();
+          this.skleton = true;
         });
-      });
+      
       
     });
   }

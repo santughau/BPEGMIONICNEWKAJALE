@@ -5,7 +5,7 @@ import { Observable } from 'rxjs';
   providedIn: 'root'
 })
 export class MyServiceService {
-  url = 'https://bpegm.co/quiz/';
+  url = 'http://bpegm.in/laxmi/quiz/';
   constructor(private http: HttpClient) { }
   getAllClasses(pageno: any, pagesize: any): Observable<any> {
     return this.http.get(

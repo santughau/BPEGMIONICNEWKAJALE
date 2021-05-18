@@ -19,28 +19,31 @@ export class ScoreBoardPage implements OnInit {
     profile_uid: "",
     profile_id: ""
   };
-  collection: [] = [];
+  collection: any = [];
   errorMessage = "";
   showData: boolean = true;
+  skleton = false;
   constructor(public loadingController: LoadingController, private service: MyServiceService, public auth: AngularFireAuth) { }
 
   ngOnInit() {
     this.auth.user.subscribe((user) => {
       this.uid = user.uid;
-      this.presentLoading().then(() => {
-        this.service.getProfile(this.uid).subscribe((res) => {
-          this.registerData = res.document;
-          this.service.getLeaderboardData(this.registerData?.profile_id).subscribe((res) => {
-            this.collection = res.document.records;
-            this.loadingController.dismiss();
-            this.showData = true;
-          }, (error) => {
-            this.loadingController.dismiss();
-            this.errorMessage = error;
-            this.showData = false;
-          })
-        });
+
+      this.service.getProfile(this.uid).subscribe((res) => {
+        this.registerData = res.document;
+        this.service.getLeaderboardData(this.registerData?.profile_id).subscribe((res) => {
+          this.collection = res.document.records;
+          console.log(this.collection);
+
+          this.skleton = true;
+          this.showData = true;
+        }, (error) => {
+          this.skleton = true;
+          this.errorMessage = error;
+          this.showData = false;
+        })
       });
+
 
     });
   }

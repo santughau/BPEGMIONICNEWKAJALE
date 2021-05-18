@@ -1,6 +1,5 @@
 import { Component, OnInit } from '@angular/core';
 import { MyServiceService } from 'src/app/serives/my-service.service';
-import { LoadingController } from '@ionic/angular';
 import { Router } from '@angular/router';
 @Component({
   selector: 'app-quiz',
@@ -21,83 +20,66 @@ export class QuizPage implements OnInit {
   errorMessage = "";
   showData: boolean = true;
   firstView: boolean = true;
-  constructor(private service: MyServiceService, public loadingController: LoadingController, private _router: Router) { }
+  skleton = false;
+  constructor(private service: MyServiceService, private _router: Router) { }
 
   ngOnInit() {
-    this.presentLoading().then(() => {
-      this.service.getAllClasses(this.pageno, this.pagesize).subscribe((res) => {
-        this.datas = res.document.records;
-        this.loadingController.dismiss();
-      })
+    this.service.getAllClasses(this.pageno, this.pagesize).subscribe((res) => {
+      this.datas = res.document.records;
+      this.skleton = true;
     })
 
   }
 
-  async presentLoading() {
-    const loading = await this.loadingController.create({
-      message: 'कृपया  थोडा वेळ वाट पहा आम्ही सर्वर वरून डेटा तुमच्या करिता  घेऊन येत आहोत .... ',
-    });
-    await loading.present();
-  }
-
   onChangeClass(ev: any) {
+    this.skleton = false;
     this.classId = ev.target.value;
-
-
     if (ev.target.value == 100) {
       this.allSubject = [];
       this.allChapters = [];
     } else {
       this.allChapters = [];
-      this.presentLoading().then(() => {
-        this.service.getSubjectList(this.classId).subscribe((data) => {
-          this.allSubject = data.document.records;
-          this.loadingController.dismiss()
-
-
-        });
-      })
+      this.service.getSubjectList(this.classId).subscribe((data) => {
+        this.allSubject = data.document.records;
+        this.skleton = true
+      });
 
     }
   }
 
   onChangeSub(ev: any) {
+    this.skleton = false;
     this.subId = ev.target.value;
     if (ev.target.value == 100) {
       this.allChapters = [];
     } else {
       this.allChapters = [];
-      this.presentLoading().then(() => {
-        this.service.getChapterList(this.subId).subscribe((data) => {
-          this.allChapters = data.document.records;
-          this.loadingController.dismiss();
-        });
-      })
+      this.service.getChapterList(this.subId).subscribe((data) => {
+        this.allChapters = data.document.records;
+        this.skleton = true;
+      });
     }
   }
 
 
   onChangeChapter(ev: any) {
+    this.skleton = false;
     this.firstView = false;
     this.chapterId = ev.target.value;
     if (ev.target.value == 100) {
       this.examList = [];
     } else {
       this.examList = [];
-      this.presentLoading().then(() => {
-        this.service.getExamList(this.chapterId).subscribe((data) => {
-          this.examList = data.document.records;
-          this.showData = true;
-          this.loadingController.dismiss();
-        }, (error) => {
-          this.loadingController.dismiss();
-          this.errorMessage = error;
-          this.examList = [];
-
-          this.showData = false;
-
-        });
-      })
+      this.service.getExamList(this.chapterId).subscribe((data) => {
+        this.examList = data.document.records;
+        this.showData = true;
+        this.skleton = true;
+      }, (error) => {
+        this.skleton = true;
+        this.errorMessage = error;
+        this.examList = [];
+        this.showData = false;
+      });
 
     }
   }

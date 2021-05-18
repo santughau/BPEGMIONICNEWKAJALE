@@ -22,18 +22,16 @@ export class WorksheetPage implements OnInit {
   errorMessage = "";
   showData: boolean = true;
   firstView: boolean = true;
+  skleton = false;
   constructor(public loadingController: LoadingController, private iab: InAppBrowser, private service: MyServiceService) { }
 
   ngOnInit() {
     this.showLoadingIndicator = true;
-    this.presentLoading().then(() => {
-      this.service.getAllClasses(this.pageno, this.pagesize).subscribe((res) => {
-        this.datas = res.document.records;
-        this.loadingController.dismiss();
-        this.showLoadingIndicator = false;
-      })
-    });
-
+    this.service.getAllClasses(this.pageno, this.pagesize).subscribe((res) => {
+      this.datas = res.document.records;
+      this.skleton = true;
+      this.showLoadingIndicator = false;
+    })
   }
 
   async presentLoading() {
@@ -45,6 +43,7 @@ export class WorksheetPage implements OnInit {
 
 
   onChangeClass(ev: any) {
+    this.skleton = false;
     this.classId = ev.target.value;
     if (ev.target.value == 100) {
       this.showLoadingIndicator = false;
@@ -53,36 +52,32 @@ export class WorksheetPage implements OnInit {
     } else {
       this.showLoadingIndicator = true
       this.allChapters = [];
-      this.presentLoading().then(() => {
-        this.service.getSubjectList(this.classId).subscribe((data) => {
-          this.allSubject = data.document.records;
-          this.loadingController.dismiss();
-          this.showLoadingIndicator = false;
-        });
+      this.service.getSubjectList(this.classId).subscribe((data) => {
+        this.allSubject = data.document.records;
+        this.skleton = true;
+        this.showLoadingIndicator = false;
       });
-
     }
   }
 
   onChangeSub(ev: any) {
+    this.skleton = false;
     this.subId = ev.target.value;
     if (ev.target.value == 100) {
       this.showLoadingIndicator = false;
       this.allChapters = [];
     } else {
       this.showLoadingIndicator = true;
-      this.presentLoading().then(() => {
-        this.service.getChapterList(this.subId).subscribe((data) => {
-          this.allChapters = data.document.records;
-          this.loadingController.dismiss();
-          this.showLoadingIndicator = false;
-        });
+      this.service.getChapterList(this.subId).subscribe((data) => {
+        this.allChapters = data.document.records;
+        this.skleton = true;
+        this.showLoadingIndicator = false;
       });
-
     }
   }
 
   onChangeChapter(ev: any) {
+    this.skleton = false;
     this.firstView = false;
     this.chapterId = ev.target.value;
     if (ev.target.value == 100) {
@@ -90,21 +85,18 @@ export class WorksheetPage implements OnInit {
       this.homeworkList = [];
     } else {
       this.showLoadingIndicator = true;
-      this.presentLoading().then(() => {
-        this.service.getHomeList(this.chapterId).subscribe((data) => {
-          this.homeworkList = data.document.records;
-          this.loadingController.dismiss();
-          this.showData = true;
-          this.showLoadingIndicator = false;
-        }, (error) => {
-          this.loadingController.dismiss();
-          this.errorMessage = error;
-          this.homeworkList = [];
-          this.showData = false;
-          this.showLoadingIndicator = false;
-        });
+      this.service.getHomeList(this.chapterId).subscribe((data) => {
+        this.homeworkList = data.document.records;
+        this.skleton = true;
+        this.showData = true;
+        this.showLoadingIndicator = false;
+      }, (error) => {
+        this.skleton = true;
+        this.errorMessage = error;
+        this.homeworkList = [];
+        this.showData = false;
+        this.showLoadingIndicator = false;
       });
-
     }
   }
 

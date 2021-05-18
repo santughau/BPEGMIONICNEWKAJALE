@@ -22,18 +22,16 @@ export class TextBookPage implements OnInit {
   errorMessage = "";
   showData: boolean = true;
   firstView: boolean = true;
+  skleton = false;
   constructor(public loadingController: LoadingController, private service: MyServiceService, private iab: InAppBrowser) { }
 
   ngOnInit() {
-    this.showLoadingIndicator = true;
-    this.presentLoading().then(() => {
+    this.showLoadingIndicator = true; 
       this.service.getAllClasses(this.pageno, this.pagesize).subscribe((res) => {
         this.datas = res.document.records;
-        this.loadingController.dismiss();
+        this.skleton = true;
         this.showLoadingIndicator = false;
-      })
-    });
-
+      });
   }
 
   async presentLoading() {
@@ -49,14 +47,12 @@ export class TextBookPage implements OnInit {
       this.allSubject = [];
 
     } else {
-      this.showLoadingIndicator = true;
-      this.presentLoading().then(() => {
+      this.showLoadingIndicator = true;      
         this.service.getSubjectList(this.classId).subscribe((data) => {
           this.allSubject = data.document.records;
-          this.loadingController.dismiss();
+          this.skleton = true;
           this.showLoadingIndicator = false;
-        });
-      });
+        });      
     }
   }
 

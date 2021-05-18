@@ -47,6 +47,7 @@ export class QuestionPagePage implements OnInit {
     profile_id: ""
   };
   saveData = {}
+  skleton = false;
   constructor(public auth: AngularFireAuth, public loadingController: LoadingController, private router: Router, public service: MyServiceService, private _route: ActivatedRoute) { }
 
   ngOnInit() {
@@ -61,13 +62,10 @@ export class QuestionPagePage implements OnInit {
     this.taluka = [];
     this.distId = 0;
     this.examId = +this._route.snapshot.params['id'];
-    this.presentLoading().then(() => {
-      this.service.getQuestionList(this.examId).subscribe((res) => {
-        this.questions = res.document.records;
-        this.loadingController.dismiss();
-      })
-    })
-
+    this.service.getQuestionList(this.examId).subscribe((res) => {
+      this.questions = res.document.records;
+      this.skleton = true;
+    });
     this.timer();
     this.service.getDistrictList().subscribe((data) => {
       this.district = data.document.records;

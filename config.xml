@@ -1,6 +1,6 @@
 <?xml version='1.0' encoding='utf-8'?>
 <widget id="io.kajale.user" version="1.0.1" xmlns="http://www.w3.org/ns/widgets" xmlns:cdv="http://cordova.apache.org/ns/1.0">
-    <name>Anubhav Shala</name>
+    <name>Mazi Shala</name>
     <description>An awesome Ionic/Cordova app.</description>
     <author email="sanskarsontakke@gmail.com" href="http://ionicframework.com/">Sanskar Sontakke</author>
     <content src="index.html" />
