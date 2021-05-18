@@ -26,26 +26,6 @@ export class HomePage implements OnInit {
 
   ngOnInit(): void {
 
-    setTimeout(() => {
-      this.network.onConnect().subscribe(() => {
-        if (this.network.type === 'wifi' || this.network.type === 'CELL_4G' || this.network.type === 'CELL_3G' || this.network.type === 'CELL') {
-          console.log('we got a wifi connection, woohoo!');
-        }
-        else {
-          this.openAlert();
-        }
-      });
-    }, 3000);
-
-    setTimeout(() => {
-      this.network.onDisconnect().subscribe(() => {
-        this.openAlert();
-        console.log("Disconnected Network");
-      });
-    }, 3000);
-
-
-
     this.auth.user.subscribe((user) => {
       this.uid = user.uid;
       this.service.getProfile(this.uid).subscribe((res) => {

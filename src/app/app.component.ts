@@ -48,7 +48,9 @@ export class AppComponent {
   };
   constructor(private network: Network, private location: Location, private platform: Platform, public alertController: AlertController, private service: MyServiceService, public auth: AngularFireAuth, private router: Router,) {
 
-
+    window.addEventListener('offline', () => {
+      this.openAlert();
+    });
 
 
     setTimeout(() => {
